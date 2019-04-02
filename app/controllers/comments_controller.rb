@@ -11,6 +11,7 @@ class CommentsController < ApplicationController
     @comment = @post.comments.new(comment_params)
     respond_to do |format|
       if @comment.save
+        ActionCable.server.broadcast 'comment_notifications_channel', { message: "<p>#{@comment.message} <a href=#{edit_post_comment_path(@post, @comment)}>Edit</a></p>", id: "#{@post.id}_comments"}
         format.html { redirect_to post_path(id: @post.id), notice: 'Comment was successfully created.' }
       else
         format.html { render :new }

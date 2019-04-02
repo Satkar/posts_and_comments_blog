@@ -15,7 +15,7 @@
 
   <div class="field">
     <%= form.label :message %>
-    <%= form.text_field :message, name: "comment[message]" %>
+    <%= form.text_field :message, name: "comment[message]", value: @comment.message %>
   </div>
 
   <div class="actions">
@@ -23,6 +23,3 @@
   </div>
 <% end %>
 
-
-<%= link_to 'Show', post_comment_path(@post, @comment) %> |
-<%= link_to 'Back', post_comments_path(@post) %>
