@@ -19,13 +19,17 @@ chdir APP_ROOT do
 
   # Install JavaScript dependencies if using Yarn
   # system('bin/yarn')
+  puts '== Running Specs =='
+  system('rspec spec')
 
   system('bin/rake post_comment_details:seed_data')
+
+  puts "=======Starting Redis Server================"
   system('redis-server')
 
   puts "\n== Removing old logs and tempfiles =="
   system! 'bin/rails log:clear tmp:clear'
 
   puts "\n== Restarting application server =="
-  system! 'bin/rails restart'
+  system! 'bin/rails s -p 3000'
 end
