@@ -26,7 +26,7 @@ You can use TDD approach to implement the above statement
     This command will do the following tasks
     1. Installs gem dependencies
     2. Executes unit specs
-    3. Seeds a data to User, Post and Comment Collections
+    3. Seeds data to User, Post and Comment Collections
     4. Start the redis server
     5. Starts the rails application on http://localhost:3000
     
