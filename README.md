@@ -30,7 +30,7 @@ You can use TDD approach to implement the above statement
     4. Start the redis server
     5. Starts the rails application on http://localhost:3000
     
-## To Login
+## Login Details
   Please refer credentials from [here](https://github.com/Satkar/posts_and_comments_blog/blob/master/lib/tasks/post_comment_details.rake#L16)
     
   
