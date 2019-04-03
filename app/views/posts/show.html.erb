@@ -1,24 +1,30 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @post.description %>
-</p>
+<div class='container'>
+	<p id="notice"><%= notice %></p>
 
 
-<p id='<%= "#{@post.id}_comments" %>'>
-	<strong>Comments:</strong>
-	<% @comments.each do |comment| %>
-		<br/>
-		<%= comment.message %>
-		<%= link_to 'Edit', edit_post_comment_path(@post, comment) %>
-	<% end %>
-</p>
+	<h2><%= @post.title %></h2>
+
+	<p>
+	  <%= @post.description %>
+	</p>
+
+
+	<p id='<%= "#{@post.id}_comments" %>'>
+		<div class='comment greyButton'><strong>Comments:</strong></div>
+		<ul id='<%= "#{@post.id}_commentList" %>' class='commentList'>
+		<% @comments.each do |comment| %>
+			<li>
+			  <%= comment.message %>
+			  <% if comment.user_id == current_user.id %>
+				  <%= link_to edit_post_comment_path(@post, comment), class: 'floatRight' do %>
+	            <i class="fa fa-edit" style="font-size:12px"></i>
+	        <% end %>
+        <% end %>
+		  </li>
+		<% end %>
+		</ul>
+	</p>
+</div>
 
 <%= form_with(url: post_comments_path(post_id: @post.id), local: true) do |form| %>
 	<div class="container">
@@ -45,4 +51,3 @@
 
 <%= link_to 'Edit', edit_post_path(@post), class: 'button blueButton' %>
 <%= link_to 'Back', posts_path, class: 'button greyButton'  %>
-

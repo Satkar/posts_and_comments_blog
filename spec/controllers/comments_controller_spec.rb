@@ -4,7 +4,8 @@ RSpec.describe CommentsController, type: :controller do
 
   let(:sample_post) { FactoryBot.create(:post, title: Faker::String.random, description: Faker::String.random)}
   describe "#edit" do
-    let(:comment) { FactoryBot.create(:comment, message: Faker::String.random, post_id: sample_post.id)}
+    let(:user) { FactoryBot.create(:user, email: Faker::Internet.email, password: Faker::Internet.password)}
+    let(:comment) { FactoryBot.create(:comment, message: Faker::String.random, post_id: sample_post.id, user_id: user.id)}
     context "When user is not logged in" do
 
       it "should redirect to the sign_in page" do
@@ -14,10 +15,9 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     context "When user is logged in" do
-      let(:user) { FactoryBot.create(:user, email: Faker::Internet.email, password: Faker::Internet.password)}
       it "Should redirect to the edit page" do
         sign_in user
-        get :edit, params: { id: comment.id, post_id: sample_post.id }
+        get :edit, params: { id: comment.id, post_id: sample_post.id , user_id: user.id}
         expect(response).to render_template("comments/edit")
       end
     end
@@ -54,9 +54,9 @@ RSpec.describe CommentsController, type: :controller do
   end
 
   describe "#update" do
-    let(:comment) {FactoryBot.create(:comment, message: Faker::String.random, post_id: sample_post.id) }
-    let(:comment_hash) {{ comment: {message: Faker::String.random }, id: comment.id, post_id: sample_post.id }}
     let(:user) { FactoryBot.create(:user, email: Faker::Internet.email, password: Faker::Internet.password)}
+    let(:comment) {FactoryBot.create(:comment, message: Faker::String.random, post_id: sample_post.id, user_id: user.id) }
+    let(:comment_hash) {{ comment: {message: Faker::String.random }, id: comment.id, post_id: sample_post.id }}
     context "When user is not logged in" do
 
       it "should redirect to the sign_in page" do
@@ -85,7 +85,8 @@ RSpec.describe CommentsController, type: :controller do
   end
 
   describe "#destroy" do
-    let(:comment) {FactoryBot.create(:comment, message: Faker::String.random, post_id: sample_post.id) }
+    let(:user) { FactoryBot.create(:user, email: Faker::Internet.email, password: Faker::Internet.password)}
+    let(:comment) {FactoryBot.create(:comment, message: Faker::String.random, post_id: sample_post.id, user_id: user.id) }
     context "When user is not logged in" do
 
       it "should redirect to the sign_in page" do
@@ -95,8 +96,7 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     context "When user is logged in" do
-      let(:user) { FactoryBot.create(:user, email: Faker::Internet.email, password: Faker::Internet.password)}
-      let(:comment_hast) { {id: comment.id, post_id: sample_post.id  }}
+      let(:comment_hast) { {id: comment.id, post_id: sample_post.id, user_id: user.id }}
       it "Should redirect to the index page of post" do
         sign_in user
         delete :destroy, params: comment_hast

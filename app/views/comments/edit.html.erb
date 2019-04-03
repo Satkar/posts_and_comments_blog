@@ -1,6 +1,7 @@
-<h1>Editing Comment</h1>
+<h2>Editing Comment</h2>
 
 <%= form_with(url: post_comment_path(@post, @comment), local: true, method: :put) do |form| %>
+	<div class="container">
   <% if @comment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
@@ -21,5 +22,6 @@
   <div class="actions">
     <%= form.submit %>
   </div>
+</div>
 <% end %>
 

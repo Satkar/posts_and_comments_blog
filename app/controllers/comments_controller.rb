@@ -9,9 +9,11 @@ class CommentsController < ApplicationController
   # POST posts/:id/comments
   def create
     @comment = @post.comments.new(comment_params)
+    @comment.user_id = current_user.id
+
     respond_to do |format|
       if @comment.save
-        ActionCable.server.broadcast 'comment_notifications_channel', { message: "<p>#{@comment.message} <a href=#{edit_post_comment_path(@post, @comment)}>Edit</a></p>", id: "#{@post.id}_comments"}
+        ActionCable.server.broadcast 'comment_notifications_channel', { message: "<li>#{@comment.message}</li>", id: "#{@post.id}_commentList"}
         format.html { redirect_to post_path(id: @post.id), notice: 'Comment was successfully created.' }
       else
         format.html { render :new }
