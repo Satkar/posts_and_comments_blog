@@ -2,7 +2,7 @@
 
 <h1>Posts</h1>
 
-<table>
+<table id='posts'>
   <thead>
     <tr>
       <th>Title</th>
@@ -16,9 +16,18 @@
       <tr>
         <td><%= post.title %></td>
         <td><%= post.description %></td>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to post do %>
+            <i class="fa fa-eye" style="font-size:12px"></i>
+          <% end %>
+        </td>
+        <td><%= link_to edit_post_path(post) do %>
+            <i class="fa fa-edit" style="font-size:12px"></i>
+          <% end %>
+        </td>
+        <td><%= link_to post, method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class="fa fa-trash" style="font-size:12px"></i>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +35,4 @@
 
 <br>
 
-<%= link_to 'New Post', new_post_path %>
+<%= link_to 'New Post', new_post_path, class: 'button blueButton' %>
